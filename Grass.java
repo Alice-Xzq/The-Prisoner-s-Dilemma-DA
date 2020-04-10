@@ -14,5 +14,7 @@ public class Grass extends Plant {
 		
 		myWorld.getCreatureList().add(new Grass(new Location(newX,newY), myWorld));
 	}
+	
+	//Waree is testing if this syncs to GitHub
 
 }
