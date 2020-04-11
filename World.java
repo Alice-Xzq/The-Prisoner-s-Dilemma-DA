@@ -28,7 +28,7 @@ public class World {
 		int currentSizeOfCreatureList = creatureList.size();
 		System.out.println("size of list is "+currentSizeOfCreatureList);
 		for(int i=0; i< currentSizeOfCreatureList; i++) {
-			creatureList.get(i).reproduce();
+			creatureList.get(i).updateStrat();
 		}
 	}
 	
