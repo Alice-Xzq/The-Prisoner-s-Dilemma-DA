@@ -57,9 +57,5 @@ public class Defector extends Prisoner {
 	public double getScore() {
 		return myScore;
 	}
-	
-	public void updateStrat() {
-
-	}
 
 }

@@ -21,29 +21,25 @@ public class World {
 	public void letTimePass() {
 		allInteract();
 		allInherit();
+		resetScores();
+	}
+	
+	public void allInteract() {
+		for (LifeForm l : creatureList) {
+			l.interact();
+		}
 	}
 
 	public void allInherit() {
 		int currentSizeOfCreatureList = creatureList.size();
-		System.out.println("size of list is " + currentSizeOfCreatureList);
-		for (int i = 0; i < currentSizeOfCreatureList; i++) {
+		for (int i = currentSizeOfCreatureList; i>=0; i--) {
 			inherit(i);
 		}
 	}
 
-	public void purgeTheDead() {
-		int i = 0;
-		while (i < creatureList.size()) {
-			if (creatureList.get(i).isDead())
-				creatureList.remove(i);
-			else
-				i++;
-		}
-	}
-
-	public void allInteract() {
+	public void resetScores() {
 		for (LifeForm l : creatureList) {
-			l.interact();
+			l.setScore(0);
 		}
 	}
 

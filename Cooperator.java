@@ -63,10 +63,4 @@ public class Cooperator extends Prisoner {
 		return myType;
 	}
 
-	public void updateStrat() {
-
-	}
-	
-	private RandomGenerator rgen = RandomGenerator.getInstance();
-
 }
