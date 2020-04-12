@@ -9,14 +9,18 @@ public abstract class LifeForm {
 	protected Color myColor;
 	protected int myAge;
 	protected boolean alive;
+	protected int myType;
+	protected double myScore;
 	
 	// lifeform constructors
-	public LifeForm(int myLifeSpan, Location myLocation, Color myColor, World myWorld) {
+	public LifeForm(int myLifeSpan, Location myLocation, Color myColor, World myWorld, int myType, double myScore) {
 		super();
 		this.myLifeSpan = myLifeSpan;
 		this.myLocation = myLocation;
 		this.myColor = myColor;
 		this.myWorld = myWorld;
+		this.myType = myType;
+		this.myScore = myScore;
 		alive = true;
 	}
 	
@@ -40,7 +44,8 @@ public abstract class LifeForm {
 	}
 	
 	// to be alive you have to be able to reproduce....
-	public abstract void updateStrat();
+	public abstract void interact();
+	public abstract void refill(int myIndex);
 	
 	public boolean isDead(){
 		return !alive;
@@ -55,6 +60,13 @@ public abstract class LifeForm {
 		this.myLifeSpan = myLifeSpan;
 	}
 	
+	public int getMyType() {
+		return myType;
+	}
+	
+	public void setMyType(int myType) {
+		this.myType = myType;
+	}
 	public Location getMyLocation() {
 		return myLocation;
 	}
@@ -77,6 +89,14 @@ public abstract class LifeForm {
 
 	public void setAge(int age) {
 		this.myAge = age;
+	}
+	
+	public double getScore() {
+		return myScore;
+	}
+
+	public void setScore(double score) {
+		this.myScore = score;
 	}
 	
 	@Override
