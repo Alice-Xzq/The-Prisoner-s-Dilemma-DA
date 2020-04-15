@@ -3,59 +3,37 @@ import java.awt.Color;
 public class Defector extends Prisoner {
 
 	// instance variable
+	int score;
 
 	public Defector(Location myLocation, World myWorld) {
 		super(myLocation, myWorld);
 		myColor = Color.red;
-		myScore = 0;
-		myType = 1;
+		score = 0;
 	}
 
-	public Defector(Location myLocation, World myWorld, double myScore) {
+	public Defector(Location myLocation, World myWorld, int score) {
 		super(myLocation, myWorld);
 		myColor = Color.red;
-		this.myScore = myScore;
-		this.myType = 1;
-	}
-	
-	public void interact() {
-		double rawScore = 0;
-		int numberOfNeighbors = 0;
-		for (int i = 0; i < 4; i++) {
-			double scoreOfOneNeighbor = interactOneNeighbor(i);
-			if (scoreOfOneNeighbor != -1) {
-				rawScore += scoreOfOneNeighbor;
-				numberOfNeighbors++;
-			}
-		}
-		myScore += rawScore / numberOfNeighbors;
+		this.score = score;
 	}
 
-	public int interactOneNeighbor(int neighbor) {
-		int index = myWorld.findNeighborIndex(myLocation, neighbor);
-		if (index != -1) {
-			if (myWorld.getCreatureList().get(index).getMyType() == 0) {
-				return t;
-			}
-			if (myWorld.getCreatureList().get(index).getMyType() == 1) {
-				return p;
-			}
-		}
-		return -1;
-	}
-	
-	public void refill(int myIndex) {
-		myWorld.getCreatureList().add(new Cooperator(myLocation,myWorld));
-		myWorld.getCreatureList().remove(myIndex);
-	}
-	
 	//setters and getters
-	public void setScore(double s) {
-		myScore = s;
+	public void setScore(int s) {
+		score = s;
 	}
 	
-	public double getScore() {
-		return myScore;
+	public int getScore() {
+		return score;
+	}
+	
+	@Override
+	public void updateStrat() {
+
+	}
+
+	@Override
+	public int updateScore() {
+		return score;
 	}
 
 }

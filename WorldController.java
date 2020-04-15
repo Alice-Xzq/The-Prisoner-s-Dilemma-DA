@@ -22,9 +22,21 @@ public class WorldController extends GraphicsProgram {
 	
 	public void setUpWorld(){
 		theWorld = new World(20,20);
-//		theWorld.getCreatureList().add( new Grass( new Location(3,6), theWorld ));
-//		theWorld.getCreatureList().add( new Grass( new Location(4,6), theWorld ));
+		initializePrisoners(theWorld, 0.5);
 		theWorldCanvas = this.getGCanvas();
+	}
+	
+	public void initializePrisoners(World world, double p) {
+		for(int row = 0; row < 20; row++) {
+			for(int col = 0; col < 20; col++) {
+				RandomGenerator rgen = new RandomGenerator();
+				if(rgen.nextBoolean(p)) {
+					world.getCreatureList().add( new Cooperator( new Location(row,col), theWorld ));
+				}else {
+					world.getCreatureList().add( new Defector( new Location(row,col), theWorld ));
+				}
+			}
+		}
 	}
 	
 	public void runWorld(){
