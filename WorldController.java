@@ -8,11 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class WorldController extends GraphicsProgram {
-
 	private World theWorld;
 	private GCanvas theWorldCanvas;
-	public static final int APPLICATION_WIDTH = 200;
-	public static final int APPLICATION_HEIGHT = 200;
+	public static final int APPLICATION_WIDTH = 500;
+	public static final int APPLICATION_HEIGHT = 500;
 
 	public double[][] data = new double[10][2];
 
