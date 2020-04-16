@@ -1,7 +1,5 @@
 import java.awt.Color;
 
-import acm.util.RandomGenerator;
-
 public class Cooperator extends Prisoner {
 
 	public Cooperator(Location myLocation, World myWorld) {
@@ -19,19 +17,6 @@ public class Cooperator extends Prisoner {
 
 	}
 
-	public void interact() {
-		double rawScore = 0;
-		int numberOfNeighbors = 0;
-		for (int i = 0; i < 4; i++) {
-			double scoreOfOneNeighbor = interactOneNeighbor(i);
-			if (scoreOfOneNeighbor != -1) {
-				rawScore += scoreOfOneNeighbor;
-				numberOfNeighbors++;
-			}
-		}
-		myScore += rawScore / numberOfNeighbors;
-	}
-
 	public int interactOneNeighbor(int neighbor) {
 		int index = myWorld.findNeighborIndex(myLocation, neighbor);
 		if (index != -1) {
@@ -45,22 +30,22 @@ public class Cooperator extends Prisoner {
 		return -1;
 	}
 	
+	public int clusteringOneNeighbor(int neighbor) {
+		int index = myWorld.findNeighborIndex(myLocation, neighbor);
+		if (index != -1) {
+			if (myWorld.getCreatureList().get(index).getMyType() == 0) {
+				return 1;
+			}
+			if (myWorld.getCreatureList().get(index).getMyType() == 1) {
+				return 0;
+			}
+		}
+		return -1;
+	}
+	
 	public void refill(int myIndex) {
-		myWorld.getCreatureList().add(new Defector(myLocation,myWorld));
 		myWorld.getCreatureList().remove(myIndex);
-	}
-
-	// setters and getters
-	public void setScore(double s) {
-		myScore = s;
-	}
-
-	public double getScore() {
-		return myScore;
-	}
-
-	public int getType() {
-		return myType;
+		myWorld.getCreatureList().add(myIndex,new Defector(myLocation,myWorld));
 	}
 
 }

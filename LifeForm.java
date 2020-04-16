@@ -31,21 +31,15 @@ public abstract class LifeForm {
 		alive = true;
 	}
 	
-	/* all the basic lifeform functions
-	 * 		getOlder
-	 * 		reproduce
-	 */
-	
-	// we all age the same, time clicks forward and we all age one unit of time
 	public void age(int time){
 		myAge+=time;
 		if (myAge>myLifeSpan)
 			alive=false;
 	}
 	
-	// to be alive you have to be able to reproduce....
-	public abstract void interact();
 	public abstract void refill(int myIndex);
+	public abstract int interactOneNeighbor(int neighbor);
+	public abstract int clusteringOneNeighbor(int neighbor);
 	
 	public boolean isDead(){
 		return !alive;
@@ -67,6 +61,7 @@ public abstract class LifeForm {
 	public void setMyType(int myType) {
 		this.myType = myType;
 	}
+	
 	public Location getMyLocation() {
 		return myLocation;
 	}

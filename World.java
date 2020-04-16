@@ -23,17 +23,57 @@ public class World {
 		allInherit();
 		resetScores();
 	}
-	
+
 	public void allInteract() {
-		for (LifeForm l : creatureList) {
-			l.interact();
+		int currentSizeOfCreatureList = creatureList.size();
+		for (int i = 0; i < currentSizeOfCreatureList; i++) {
+			interact(i);
 		}
+	}
+
+	public void interact(int myIndex) {
+		double rawScore = 0;
+		int numberOfNeighbors = 0;
+		double oldScore = creatureList.get(myIndex).getScore();
+		for (int i = 0; i < 4; i++) {
+			double scoreOfOneNeighbor = creatureList.get(myIndex)
+					.interactOneNeighbor(i);
+			if (scoreOfOneNeighbor != -1) {
+				rawScore += scoreOfOneNeighbor;
+				numberOfNeighbors++;
+			}
+		}
+		creatureList.get(myIndex).setScore(
+				oldScore + (rawScore / numberOfNeighbors));
 	}
 
 	public void allInherit() {
 		int currentSizeOfCreatureList = creatureList.size();
-		for (int i = currentSizeOfCreatureList; i>=0; i--) {
+		for (int i = 0; i < currentSizeOfCreatureList; i++) {
 			inherit(i);
+		}
+	}
+
+	public void inherit(int myIndex) {
+		Location myLocation = creatureList.get(myIndex).getMyLocation();
+		double myScore = creatureList.get(myIndex).getScore();
+		int myType = creatureList.get(myIndex).getMyType();
+		double indexAndScores[][] = getNeighborScores(myLocation);
+		double max = indexAndScores[0][1];
+		int indexMax = 0;
+		for (int i = 0; i < 4; i++) {
+			if (indexAndScores[i][1] > max) {
+				max = indexAndScores[i][1];
+				indexMax = (int) indexAndScores[i][0];
+			} else if (indexAndScores[i][1] == max) {
+				if (Math.random() > 0.49) {
+					indexMax = (int) indexAndScores[i][0];
+				}
+			}
+		}
+		if ((max > myScore)
+				&& (myType != creatureList.get(indexMax).getMyType())) {
+			creatureList.get(myIndex).refill(myIndex);
 		}
 	}
 
@@ -101,28 +141,39 @@ public class World {
 		return indexAndScores;
 	}
 
-	public void inherit(int myIndex) {
-		Location myLocation = creatureList.get(myIndex).getMyLocation();
-		double myScore = creatureList.get(myIndex).getScore();
-		int myType = creatureList.get(myIndex).getMyType();
-		double indexAndScores[][] = getNeighborScores(myLocation);
-		double max = indexAndScores[0][1];
-		int indexMax = 0;
-		for (int i = 0; i < 4; i++) {
-			if (indexAndScores[i][1] > max) {
-				max = indexAndScores[i][1];
-				indexMax = (int) indexAndScores[i][0];
-			} else if (indexAndScores[i][1] == max) {
-				if (Math.random() > 0.49) {
-					indexMax = (int) indexAndScores[i][0];
-				}
-			}
+	//data gathering methods
+	public double ratioCtoD() {
+		double c = 0;
+		for (LifeForm l : creatureList) {
+			if (l.getMyType() == 0)
+				c+=1.0;
 		}
-		if ((max > myScore) && (myType!=creatureList.get(indexMax).getMyType())) {
-			creatureList.get(myIndex).refill(myIndex);
-		}
+		return c / creatureList.size();
 	}
 
+	public double clusteringFactor() {
+		double c = 0;
+		for (int i = 0; i < creatureList.size(); i++) {
+			c += clusteringScoreForOne(i);
+		}
+		return c / creatureList.size();
+	}
+
+	public double clusteringScoreForOne(int myIndex) {
+		double rawScore = 0;
+		int numberOfNeighbors = 0;
+		for (int i = 0; i < 4; i++) {
+			double scoreOfOneNeighbor = creatureList.get(myIndex)
+					.clusteringOneNeighbor(i);
+			if (scoreOfOneNeighbor != -1) {
+				rawScore += scoreOfOneNeighbor;
+				numberOfNeighbors++;
+			}
+		}
+		return rawScore / numberOfNeighbors;
+	}
+
+	//setters and getters
 	public int getWidth() {
 		return width;
 	}

@@ -15,8 +15,8 @@ public abstract class Prisoner extends LifeForm{
 		super(myLocation, myWorld);
 	}
 	
-	public abstract void interact();
-
 	public abstract void refill(int myIndex);
+	public abstract int interactOneNeighbor(int neighbor);
+	public abstract int clusteringOneNeighbor(int neighbor);
 
 }
