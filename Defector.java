@@ -44,7 +44,8 @@ public class Defector extends Prisoner {
 	
 	public void refill(int myIndex) {
 		myWorld.getCreatureList().remove(myIndex);
-		myWorld.getCreatureList().add(myIndex,new Cooperator(myLocation,myWorld));
+		//myWorld.getCreatureList().add(myIndex,new Cooperator(myLocation,myWorld));
+		myWorld.getCreatureList().add(myIndex,new Cooperator(myLocation,myWorld,myScore));
 		
 	}
 

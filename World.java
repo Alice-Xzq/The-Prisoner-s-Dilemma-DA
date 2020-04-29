@@ -18,10 +18,12 @@ public class World {
 		this.isTaken = new boolean[height][width];
 	}
 
+	//commands each individual creature to interact with its neighbor one at a time in order of creatureList 
+	//resetScores() can be remoeved to allow for memory
 	public void letTimePass() {
 		allInteract();
 		allInherit();
-		resetScores();
+		//resetScores();
 	}
 
 	public void allInteract() {
@@ -31,6 +33,7 @@ public class World {
 		}
 	}
 
+	//calculates and sets the score when a prisoner interacts with its neighbors
 	public void interact(int myIndex) {
 		double rawScore = 0;
 		int numberOfNeighbors = 0;
@@ -54,6 +57,7 @@ public class World {
 		}
 	}
 
+	//finds the neighbor with the highest score, if neighbor's score is higher than own score, 
 	public void inherit(int myIndex) {
 		Location myLocation = creatureList.get(myIndex).getMyLocation();
 		double myScore = creatureList.get(myIndex).getScore();
@@ -83,6 +87,8 @@ public class World {
 		}
 	}
 
+	//finds the index of 4 neighbors based on location of current prisoner
+	//it was written this way to be compatible with methods of generating prisoners that do not place prisoners filling rows or columns in order
 	public int findNeighborIndex(Location l, int neighbor) {
 		int creatureIndex = 0;
 		if (neighbor == 0) {
@@ -142,6 +148,7 @@ public class World {
 	}
 
 	//data gathering methods
+	
 	public double ratioCtoD() {
 		double c = 0;
 		for (LifeForm l : creatureList) {
@@ -151,6 +158,7 @@ public class World {
 		return c / creatureList.size();
 	}
 
+	//in the end, this was not used in data collection because it is ambiguous; the same clustering factor can look very different 
 	public double clusteringFactor() {
 		double c = 0;
 		for (int i = 0; i < creatureList.size(); i++) {

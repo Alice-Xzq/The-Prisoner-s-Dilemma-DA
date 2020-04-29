@@ -43,9 +43,11 @@ public class Cooperator extends Prisoner {
 		return -1;
 	}
 	
+	
 	public void refill(int myIndex) {
 		myWorld.getCreatureList().remove(myIndex);
-		myWorld.getCreatureList().add(myIndex,new Defector(myLocation,myWorld));
+		//myWorld.getCreatureList().add(myIndex,new Defector(myLocation,myWorld));
+		myWorld.getCreatureList().add(myIndex,new Defector(myLocation,myWorld,myScore));
 	}
 
 }
